@@ -126,9 +126,10 @@ public class Main {
             String wordType1 = "sensitive-word-1";
             seekers.put(wordType1, kwSeeker1);
             KWSeekerManage kwSeekerManage = new KWSeekerManage(seekers);
-
+            int num = 0;
             for(String i : list){
                 List<SensitiveWordResult> res = kwSeekerManage.getKWSeeker(wordType1).findWords(i);
+                num = res.size();
                 for(SensitiveWordResult sensitiveWord : res){
                     i = i.replace(sensitiveWord.getWord(), map.get(sensitiveWord.getWord()));
                 }
@@ -137,6 +138,8 @@ public class Main {
             int index = path.indexOf(".");
             String newPath = path.substring(0, index) + "（测试文件）"+path.substring(index);
             OfficeWord.write(ans, newPath);
+            JOptionPane.showConfirmDialog(null,
+                    "替换完成，替换敏感词数："+num, "替换完成", JOptionPane.YES_NO_OPTION);
         }catch (Exception e){
             e.printStackTrace();
         }
