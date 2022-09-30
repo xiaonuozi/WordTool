@@ -3,7 +3,10 @@ package com.input.doc;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
-
+/*
+* @author huangzilong
+* date 22/9/30
+**/
 public class Csv {
     public Map<String, String> read(String csvFile){
         String line = "";
