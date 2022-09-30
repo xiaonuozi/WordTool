@@ -11,6 +11,7 @@ import com.hlin.sensitive.KWSeekerManage;
 import com.hlin.sensitive.KeyWord;
 import com.hlin.sensitive.SensitiveWordResult;
 import com.hlin.sensitive.SimpleKWSeekerProcessor;
+import org.junit.Test;
 
 /**
  * 
@@ -35,6 +36,7 @@ public class KWSeekerManageTest {
     /**
      * 代码调用初始化
      */
+    @Test
     public static void test1() {
         // 初始化敏感词
         Set<KeyWord> kws1 = new HashSet<KeyWord>();
