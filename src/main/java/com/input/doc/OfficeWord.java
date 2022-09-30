@@ -12,7 +12,7 @@ import java.io.InputStream;
 import java.util.*;
 
 
-public class officeWord {
+public class OfficeWord {
     public static void main(String[] args) throws IOException {
 
         InputStream is = new FileInputStream("C:\\Users\\10386\\Desktop\\word-正确文档2.docx");
