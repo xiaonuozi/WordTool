@@ -193,6 +193,7 @@ public class OfficeWord {
                 run.setText(s);
                 OutputStream os = new FileOutputStream(path);
                 xdoc.write(os);
+                os.close();
             }
         }catch (Exception e){
             e.printStackTrace();

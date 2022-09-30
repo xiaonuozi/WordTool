@@ -134,9 +134,9 @@ public class Main {
                 }
                 ans.add(i);
             }
-            for(String i : ans){
-                System.out.println(i);
-            }
+            int index = path.indexOf(".");
+            String newPath = path.substring(0, index) + "（测试文件）"+path.substring(index);
+            OfficeWord.write(ans, newPath);
         }catch (Exception e){
             e.printStackTrace();
         }
