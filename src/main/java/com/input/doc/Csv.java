@@ -10,9 +10,12 @@ public class Csv {
         String cvsSplitBy = ",";
         Map<String, String> ans = new HashMap<>();
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(csvFile), "UTF-8"))) {
-
+            int i = 0;
             while ((line = br.readLine()) != null) {
-
+                if(i == 0){
+                    i++;
+                    continue;
+                }
                 // use comma as separator
                 String[] country = line.split(cvsSplitBy);
                 ans.put(country[0],country[1]);

@@ -7,6 +7,7 @@ import cn.hutool.core.exceptions.ExceptionUtil;
 import com.hlin.sensitive.KWSeeker;
 import com.hlin.sensitive.KWSeekerManage;
 import com.hlin.sensitive.KeyWord;
+import com.hlin.sensitive.SensitiveWordResult;
 import com.input.doc.Csv;
 import com.input.doc.OfficeWord;
 import org.junit.Test;
@@ -56,7 +57,7 @@ public class InputTest {
             Csv csv = new Csv();
             Map<String,String> map = csv.read(nowPath + "\\thesaurus.csv");
             OfficeWord officeWord = new OfficeWord();
-            List<String> list = officeWord.read(nowPath + "\\石老师3200 李彪（朱）9.28.docx");
+            List<String> list = officeWord.read(nowPath + "\\1.docx");
             Set<KeyWord> kws1 = new HashSet<>();
             List<String> ans = new ArrayList<>(list.size());
             for (String key : map.keySet()) {
@@ -71,8 +72,11 @@ public class InputTest {
             KWSeekerManage kwSeekerManage = new KWSeekerManage(seekers);
 
             for(String i : list){
-                String r1 = kwSeekerManage.getKWSeeker(wordType1).replaceWords(i);
-                ans.add(r1);
+                List<SensitiveWordResult> res = kwSeekerManage.getKWSeeker(wordType1).findWords(i);
+                for(SensitiveWordResult sensitiveWord : res){
+                    i = i.replace(sensitiveWord.getWord(), map.get(sensitiveWord.getWord()));
+                }
+                ans.add(i);
             }
             for(String i : ans){
                 System.out.println(i);
