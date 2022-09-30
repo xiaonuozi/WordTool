@@ -84,7 +84,19 @@ public class InputTest {
         }catch (Exception e){
             System.out.println(ExceptionUtil.stacktraceToOneLineString(e));
         }
+    }
 
+    @Test
+    public void testWrite(){
+        try {
+            File directory = new File(""); //实例化一个File对象。参数不同时，获取的最终结果也不同
+            String nowPath = directory.getCanonicalPath();
+            OfficeWord officeWord = new OfficeWord();
+            List<String> list = officeWord.read(nowPath + "\\1.docx");
+            OfficeWord.write(list, nowPath + "\\test.docx");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 }

@@ -6,10 +6,7 @@ import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTDecimalNumber;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTDocument1;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.*;
 
 /*
@@ -17,7 +14,7 @@ import java.util.*;
  * date 22/9/30
  **/
 public class OfficeWord {
-    public static void main(String[] args) throws IOException {
+    public static void main1(String[] args) throws IOException {
 
         InputStream is = new FileInputStream("C:\\Users\\10386\\Desktop\\word-正确文档2.docx");
         XWPFDocument doc = new XWPFDocument(is);
@@ -184,6 +181,24 @@ public class OfficeWord {
 
         }
         return list;
+    }
+
+    public static void write(List<String> list, String path) {
+        try{
+            XWPFDocument xdoc = new XWPFDocument();
+            for(String s : list){
+                XWPFParagraph xpara = xdoc.createParagraph();
+                //一个XWPFRun代表具有相同属性的一个区域：一段文本
+                XWPFRun run = xpara.createRun();
+                run.setText(s);
+                OutputStream os = new FileOutputStream(path);
+                xdoc.write(os);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
     }
 
 }
