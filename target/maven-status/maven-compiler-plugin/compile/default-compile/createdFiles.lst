@@ -16,3 +16,5 @@ com\hlin\sensitive\util\EmojiUtil.class
 com\hlin\sensitive\KWSeekerManage.class
 com\hlin\sensitive\SensitiveWordResult.class
 com\hlin\sensitive\SensitiveWordResult$PositionNode.class
+com\input\doc\Csv.class
+com\input\doc\OfficeWord.class
