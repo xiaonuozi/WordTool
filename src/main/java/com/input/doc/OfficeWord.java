@@ -7,6 +7,7 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTDecimalNumber;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTDocument1;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
@@ -83,8 +84,16 @@ public class OfficeWord {
 
 
     }
-
-
+    public List<String> read(String path) throws IOException {
+        InputStream is = new FileInputStream(path);
+        XWPFDocument doc = new XWPFDocument(is);
+        List<XWPFParagraph> paras = doc.getParagraphs(); //将得到包含段落列表
+        List<String> ans = new ArrayList<>();
+        for(XWPFParagraph i : paras){
+            ans.add(i.getText());
+        }
+        return ans;
+    }
     private static List<Map<String, String>> getParagraph(XWPFParagraph para) {
         //第一段即首行 为标题
         // XWPFParagraph para = paras.get(0);
