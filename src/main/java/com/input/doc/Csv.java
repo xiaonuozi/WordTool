@@ -8,7 +8,7 @@ import java.util.Map;
 * date 22/9/30
 **/
 public class Csv {
-    public Map<String, String> read(String csvFile){
+    public Map<String, String> read(String csvFile) throws IOException {
         String line = "";
         String cvsSplitBy = ",";
         Map<String, String> ans = new HashMap<>();
@@ -27,6 +27,7 @@ public class Csv {
 
         } catch (IOException e) {
             e.printStackTrace();
+            throw e;
         }
         return ans;
     }

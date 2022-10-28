@@ -183,7 +183,7 @@ public class OfficeWord {
         return list;
     }
 
-    public static void write(List<String> list, String path) {
+    public static void write(List<String> list, String path) throws IOException {
         try{
             XWPFDocument xdoc = new XWPFDocument();
             for(String s : list){
@@ -197,6 +197,7 @@ public class OfficeWord {
             }
         }catch (Exception e){
             e.printStackTrace();
+            throw e;
         }
 
 

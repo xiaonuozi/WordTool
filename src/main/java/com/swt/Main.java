@@ -129,7 +129,7 @@ public class Main {
             int num = 0;
             for(String i : list){
                 List<SensitiveWordResult> res = kwSeekerManage.getKWSeeker(wordType1).findWords(i);
-                num = res.size();
+                num += res.size();
                 for(SensitiveWordResult sensitiveWord : res){
                     i = i.replace(sensitiveWord.getWord(), map.get(sensitiveWord.getWord()));
                 }
@@ -142,6 +142,8 @@ public class Main {
                     "替换完成，替换敏感词数："+num, "替换完成", JOptionPane.YES_NO_OPTION);
         }catch (Exception e){
             e.printStackTrace();
+            JOptionPane.showConfirmDialog(null,
+                    e.getMessage(), "替换发生错误", JOptionPane.YES_NO_OPTION);
         }
     }
 }

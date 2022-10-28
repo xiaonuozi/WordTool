@@ -40,7 +40,7 @@ public class InputTest {
             File directory = new File(""); //实例化一个File对象。参数不同时，获取的最终结果也不同
             String nowPath = directory.getCanonicalPath();
             OfficeWord officeWord = new OfficeWord();
-            List<String> list = officeWord.read(nowPath + "\\石老师3200 李彪（朱）9.28.docx");
+            List<String> list = officeWord.read(nowPath + "\\4600高琳珊10.10朱姝颖.docx");
             for(String i : list){
                 System.out.println(i);
             }
@@ -57,7 +57,7 @@ public class InputTest {
             Csv csv = new Csv();
             Map<String,String> map = csv.read(nowPath + "\\thesaurus.csv");
             OfficeWord officeWord = new OfficeWord();
-            List<String> list = officeWord.read(nowPath + "\\1.docx");
+            List<String> list = officeWord.read(nowPath + "\\4600高琳珊10.10朱姝颖.docx");
             Set<KeyWord> kws1 = new HashSet<>();
             List<String> ans = new ArrayList<>(list.size());
             for (String key : map.keySet()) {
