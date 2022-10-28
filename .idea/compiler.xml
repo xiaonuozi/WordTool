@@ -9,5 +9,6 @@
         <module name="sensitive-word-filter" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel target="8" />
   </component>
 </project>
