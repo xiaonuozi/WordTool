@@ -14,12 +14,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
 
 public class Main {
-    public static void main(String[] args) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public static void main(String[] args) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
         String lookAndFeel ="com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
         UIManager.setLookAndFeel(lookAndFeel);
         // 1. 创建一个顶层容器（窗口）
@@ -33,7 +34,14 @@ public class Main {
 
         final JTextArea textArea = new JTextArea(5, 25);
         textArea.setLineWrap(true);
-        textArea.append("");
+        //查看当前的敏感词库，可能有乱码的情况
+        File directory = new File(""); //实例化一个File对象。参数不同时，获取的最终结果也不同
+        String nowPath = directory.getCanonicalPath();
+        Csv csv = new Csv();
+        Map<String,String> map = csv.read(nowPath + "\\thesaurus.csv");
+        for(String key : map.keySet()){
+            textArea.append(key + ":" + map.get(key) + "\r\n");
+        }
         JScrollPane scrollPane = new JScrollPane(textArea);
         panel.add(scrollPane);
         // 3. 创建一个基本组件（按钮），并添加到 面板容器 中
@@ -90,7 +98,7 @@ public class Main {
 
             // 如果允许选择多个文件, 则通过下面方法获取选择的所有文件
             // File[] files = fileChooser.getSelectedFiles();
-            msgTextArea.removeAll();
+            msgTextArea.setText("");
             msgTextArea.append(file.getPath());
         }
     }
