@@ -20,6 +20,7 @@ import java.util.List;
 
 
 public class Main {
+    static File[] files;
     public static void main(String[] args) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
         String lookAndFeel ="com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
         UIManager.setLookAndFeel(lookAndFeel);
@@ -82,10 +83,10 @@ public class Main {
         // 设置文件选择的模式（只选文件、只选文件夹、文件和文件均可选）
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         // 设置是否允许多选
-        fileChooser.setMultiSelectionEnabled(false);
+        fileChooser.setMultiSelectionEnabled(true);
 
         // 添加可用的文件过滤器（FileNameExtensionFilter 的第一个参数是描述, 后面是需要过滤的文件扩展名 可变参数）
-        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("zip(*.zip, *.rar)", "zip", "rar"));
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("doc(*.doc, *.docx)", "zip", "rar"));
         // 设置默认使用的文件过滤器
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("image(*.jpg, *.png, *.gif)", "jpg", "png", "gif"));
 
@@ -94,12 +95,12 @@ public class Main {
 
         if (result == JFileChooser.APPROVE_OPTION) {
             // 如果点击了"确定", 则获取选择的文件路径
-            File file = fileChooser.getSelectedFile();
+//            File file = fileChooser.getSelectedFile();
 
-            // 如果允许选择多个文件, 则通过下面方法获取选择的所有文件
-            // File[] files = fileChooser.getSelectedFiles();
-            msgTextArea.setText("");
-            msgTextArea.append(file.getPath());
+//             如果允许选择多个文件, 则通过下面方法获取选择的所有文件
+            files = fileChooser.getSelectedFiles();
+//            msgTextArea.setText("");
+//            msgTextArea.append(file.getPath());
         }
     }
 
@@ -108,13 +109,20 @@ public class Main {
     * */
     private static void startReplace( JTextArea msgTextArea) {
         String path = msgTextArea.getText().trim();
-        if(path.equals("")){
+        if(files == null || files.length == 0){
             JOptionPane.showMessageDialog(null, "你必须先选择word文件", "错误", JOptionPane. ERROR_MESSAGE);
         }
-        replace(path);
+        int sum = 0;
+        for(File file : files){
+            sum += replace(file.getPath());
+        }
+        JOptionPane.showConfirmDialog(null,
+                "替换完成，替换敏感词数："+sum, "替换完成", JOptionPane.YES_NO_OPTION);
+        files = null;
     }
 
-    private static void replace(String path){
+    private static int replace(String path){
+        int num = 0;
         try {
             File directory = new File(""); //实例化一个File对象。参数不同时，获取的最终结果也不同
             String nowPath = directory.getCanonicalPath();
@@ -134,7 +142,7 @@ public class Main {
             String wordType1 = "sensitive-word-1";
             seekers.put(wordType1, kwSeeker1);
             KWSeekerManage kwSeekerManage = new KWSeekerManage(seekers);
-            int num = 0;
+
             for(String i : list){
                 List<SensitiveWordResult> res = kwSeekerManage.getKWSeeker(wordType1).findWords(i);
                 num += res.size();
@@ -143,15 +151,14 @@ public class Main {
                 }
                 ans.add(i);
             }
-            int index = path.indexOf(".");
-            String newPath = path.substring(0, index) + "（测试文件）"+path.substring(index);
+            int index = path.lastIndexOf(".");
+            String newPath = path.substring(0, index) + "（替换文件）"+path.substring(index);
             OfficeWord.write(ans, newPath);
-            JOptionPane.showConfirmDialog(null,
-                    "替换完成，替换敏感词数："+num, "替换完成", JOptionPane.YES_NO_OPTION);
         }catch (Exception e){
             e.printStackTrace();
             JOptionPane.showConfirmDialog(null,
                     e.getMessage(), "替换发生错误", JOptionPane.YES_NO_OPTION);
         }
+        return num;
     }
 }
