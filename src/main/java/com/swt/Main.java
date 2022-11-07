@@ -86,10 +86,9 @@ public class Main {
         fileChooser.setMultiSelectionEnabled(true);
 
         // 添加可用的文件过滤器（FileNameExtensionFilter 的第一个参数是描述, 后面是需要过滤的文件扩展名 可变参数）
-        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("doc(*.doc, *.docx)", "zip", "rar"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("doc(*.doc, *.docx)", "doc", "docx"));
         // 设置默认使用的文件过滤器
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("image(*.jpg, *.png, *.gif)", "jpg", "png", "gif"));
-
         // 打开文件选择框（线程将被阻塞, 直到选择框被关闭）
         int result = fileChooser.showOpenDialog(parent);
 
